@@ -1,10 +1,15 @@
-package Java;
+package dataStructures;
+
+import dataStructures.linkedLists.LLQueue;
+import dataStructures.linkedLists.LLStack;
+import dataStructures.linkedLists.SLList;
 
 public class Testing {
 
     public static void main(String[] args) {
         testLLStack();
         testLLQueue();
+        testSLList();
     }
 
     public static void testLLStack() {
@@ -33,6 +38,26 @@ public class Testing {
         while (!queue.isEmpty()) {
             System.out.println(queue.dequeue());
         }
+    }
+
+    public static void testSLList() {
+        System.out.println("\nSingly Linked List:");
+        SLList<Object> list = new SLList<Object>();
+
+        list.append(5);
+        list.append(10);
+        list.append(15);
+        list.append(20);
+        list.print();
+        list.addAt(100, 2);
+        System.out.println("********");
+        list.print();
+        System.out.println("********");
+        list.removeAt(2);
+        list.print();
+        System.out.println("********");
+        list.prepend(50);
+        list.print();
     }
 
 }

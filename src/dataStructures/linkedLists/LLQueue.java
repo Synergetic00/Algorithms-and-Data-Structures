@@ -1,6 +1,8 @@
-package Java;
+package dataStructures.linkedLists;
 
 import java.util.EmptyStackException;
+
+import dataStructures.SNode;
 
 // Linked-list stack implementation
 public class LLQueue<T> {

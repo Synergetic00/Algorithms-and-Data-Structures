@@ -1,6 +1,6 @@
-package Java;
+package dataStructures;
 
-// Single-linked (child) node implementation with generics
+// Singly-linked (child) node implementation with generics
 public class SNode<T> {
 
     private T data;
