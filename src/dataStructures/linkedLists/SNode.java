@@ -1,4 +1,4 @@
-package dataStructures;
+package dataStructures.linkedLists;
 
 // Singly-linked (child) node implementation with generics
 public class SNode<T> {

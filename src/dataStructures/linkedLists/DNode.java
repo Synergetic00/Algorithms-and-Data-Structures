@@ -1,4 +1,4 @@
-package dataStructures;
+package dataStructures.linkedLists;
 
 // Doubly-linked node implementation with generics
 public class DNode<T> {

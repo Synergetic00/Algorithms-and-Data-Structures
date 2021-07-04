@@ -1,7 +1,5 @@
 package dataStructures.linkedLists;
 
-import dataStructures.SNode;
-
 // Singly Linked List
 public class SLList<T> {
 

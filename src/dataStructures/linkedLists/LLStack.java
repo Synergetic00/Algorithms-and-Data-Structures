@@ -2,8 +2,6 @@ package dataStructures.linkedLists;
 
 import java.util.EmptyStackException;
 
-import dataStructures.SNode;
-
 // Linked-list queue implementation
 public class LLStack<T> {
 
