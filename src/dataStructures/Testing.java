@@ -3,6 +3,7 @@ package dataStructures;
 import dataStructures.linkedLists.LLQueue;
 import dataStructures.linkedLists.LLStack;
 import dataStructures.linkedLists.SLList;
+import dataStructures.linkedLists.SNode;
 
 public class Testing {
 
@@ -43,21 +44,37 @@ public class Testing {
     public static void testSLList() {
         System.out.println("\nSingly Linked List:");
         SLList<Object> list = new SLList<Object>();
-
-        list.append(5);
+        
+        list.append(20);
         list.append(10);
-        list.append(15);
+        list.append(20);
+        list.append(30);
+        list.append(20);
+        list.append(50);
         list.append(20);
         list.print();
-        list.addAt(100, 2);
-        System.out.println("********");
+
+        System.out.println("------");
+
+        list.removeAll(20);
         list.print();
-        System.out.println("********");
-        list.removeAt(2);
-        list.print();
-        System.out.println("********");
-        list.prepend(50);
-        list.print();
+        System.out.println(list.hasCycle());
+
+        System.out.println("------");
+        
+        SLList<Object> loop = new SLList<Object>();
+        SNode<Object> a = new SNode<Object>(1);
+        SNode<Object> b = new SNode<Object>(2);
+        SNode<Object> c = new SNode<Object>(3);
+        SNode<Object> d = new SNode<Object>(4);
+
+        loop.insertTail(a);
+        loop.insertTail(b);
+        loop.insertTail(c);
+        loop.insertTail(d);
+        loop.insertTail(b);
+
+        System.out.println(loop.hasCycle());
     }
 
 }
