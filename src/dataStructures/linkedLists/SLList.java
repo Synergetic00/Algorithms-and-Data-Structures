@@ -8,10 +8,6 @@ public class SLList<T> {
 
     //// Inserting - adding actual nodes into the list
 
-    /**
-     * Put a node object at the beginning of the list
-     * @param node
-     */
     public void insertHead(SNode<T> node) {
         SNode<T> temp = node;
         temp.setNext(head);
@@ -19,10 +15,6 @@ public class SLList<T> {
         length++;
     }
 
-    /**
-     * Put a node object at the end of the list
-     * @param node
-     */
     public void insertTail(SNode<T> node) {
         SNode<T> tail = node;
         if (this.head == null) {
@@ -39,11 +31,6 @@ public class SLList<T> {
         
     }
 
-    /**
-     * Put a node object in the list at the given index
-     * @param node
-     * @param index
-     */
     public void insertAt(SNode<T> node, int index) {
         if (index == 0) this.insertHead(node);
         SNode<T> temp = node;
@@ -58,37 +45,20 @@ public class SLList<T> {
 
     //// Adding - putting a new node in the list
 
-    /**
-     * Put a new node with the given data at the start of the list
-     * @param data
-     */
     public void addHead(T data) {
         this.insertHead(new SNode<T>(data));
     }
 
-    /**
-     * Put a new node with the given data at the end of the list
-     * @param data
-     */
     public void addTail(T data) {
         this.insertTail(new SNode<T>(data));
     }
 
-    /**
-     * Put a new node with the given data as its value at the given index
-     * @param data
-     * @param index
-     */
     public void addAt(T data, int index) {
         this.insertAt(new SNode<T>(data), index);
     }
 
     //// Extracting - remove and return the node's value
 
-    /**
-     * Get the data of the node at the start of the list
-     * @return
-     */
     public T extractHead() {
         if (head == null) return null;
         SNode<T> temp = head;
@@ -98,10 +68,6 @@ public class SLList<T> {
         return temp.getData();
     }
 
-    /**
-     * Get the data of the node at the end of the list
-     * @return
-     */
     public T extractTail() {
         if (head == null) return null;
         SNode<T> temp = head;
@@ -114,11 +80,6 @@ public class SLList<T> {
         return output.getData();
     }
 
-    /**
-     * Get the data of the node at the given index
-     * @param index
-     * @return
-     */
     public T extractAt(int index) {
         if (index == 0) this.extractHead();
         SNode<T> temp = head;
