@@ -35,4 +35,20 @@ public class BNode<T extends Comparable<? super T>> {
         this.right = right;
     }
 
+    public boolean isLeafNode() {
+        return left == null && right == null;
+    }
+
+    public boolean hasLeftNode() {
+        return left == null;
+    }
+
+    public boolean hasRightNode() {
+        return right == null;
+    }
+
+    public int compareTo(BNode<T> other) {
+        return this.getData().compareTo(other.getData());
+    }
+
 }
