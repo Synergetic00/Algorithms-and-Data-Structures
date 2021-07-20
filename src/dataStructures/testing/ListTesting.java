@@ -1,11 +1,11 @@
-package dataStructures;
+package dataStructures.testing;
 
 import dataStructures.linkedLists.LLQueue;
 import dataStructures.linkedLists.LLStack;
 import dataStructures.linkedLists.SLList;
 import dataStructures.linkedLists.SNode;
 
-public class Testing {
+public class ListTesting {
 
     public static void main(String[] args) {
         testLLStack();
