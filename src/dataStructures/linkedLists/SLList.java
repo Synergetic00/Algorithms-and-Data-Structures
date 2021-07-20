@@ -234,11 +234,11 @@ public class SLList<T> {
         if (head != null) {
             SNode<T> current = head;
             while(current.getNext() != null) {
-                output[index] = current;
+                output[index] = current.getData();
                 current = current.getNext();
                 index++;
             }
-            System.out.println(output[index] = current);
+            output[index] = current.getData();
         }
         return output;
     }
