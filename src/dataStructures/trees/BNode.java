@@ -9,6 +9,8 @@ public class BNode<T extends Comparable<? super T>> {
 
     public BNode(T data) {
         this.data = data;
+        this.left = null;
+        this.right = null;
     }
 
     public T getData() {
@@ -40,11 +42,11 @@ public class BNode<T extends Comparable<? super T>> {
     }
 
     public boolean hasLeftNode() {
-        return left == null;
+        return left != null;
     }
 
     public boolean hasRightNode() {
-        return right == null;
+        return right != null;
     }
 
     public int compareTo(BNode<T> other) {

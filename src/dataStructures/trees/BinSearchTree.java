@@ -1,5 +1,7 @@
 package dataStructures.trees;
 
+import dataStructures.linkedLists.SLList;
+
 public class BinSearchTree<T extends Comparable<? super T>> {
 
     BNode<T> root;
@@ -10,9 +12,13 @@ public class BinSearchTree<T extends Comparable<? super T>> {
 
         if (root == null) {
             root = node;
+            return;
         } else {
-            if (contains(data)) return;
-            traverseAndInsert(node, root);
+            if (contains(data)) {
+                return;
+            } else {
+                traverseAndInsert(root, node);
+            }
         }
     }
 
@@ -21,25 +27,29 @@ public class BinSearchTree<T extends Comparable<? super T>> {
     }
 
     public BNode<T> findNode(T data) {
-        BNode<T> current = root;
-        while (current != null) {
-            if (current.getData().equals(data)) return current;
-            else if (current.getData().compareTo(data) < 0) current = current.getLeft();
-            else current = current.getRight();
-        }
-        return null;
+        return this.findNode(root, data);
     }
 
-    private void traverseAndInsert(BNode<T> node, BNode<T> origin) {
+    private BNode<T> findNode(BNode<T> origin, T data) {
+        if (origin == null || origin.getData().equals(data)) {
+            return origin;
+        } else if (origin.getData().compareTo(data) < 0) {
+            return findNode(origin.getRight(), data);
+        } else {
+            return findNode(origin.getLeft(), data);
+        }
+    }
+
+    private void traverseAndInsert(BNode<T> origin, BNode<T> node) {
         if (node.compareTo(origin) < 0) {
             if (origin.hasLeftNode()) {
-                traverseAndInsert(node, node.getLeft());
+                traverseAndInsert(origin.getLeft(), node);
             } else {
                 origin.setLeft(node);
             }
         } else {
             if (origin.hasRightNode()) {
-                traverseAndInsert(node, node.getRight());
+                traverseAndInsert(origin.getRight(), node);
             } else {
                 origin.setRight(node);
             }
@@ -55,14 +65,20 @@ public class BinSearchTree<T extends Comparable<? super T>> {
 	}
 
     public void printInOrder() {
-        this.traverseInOrder(root);
+        this.getInOrderList().print();
     }
 
-    public void traverseInOrder(BNode<T> node) {
+    public SLList<T> getInOrderList() {
+        SLList<T> list = new SLList<T>();
+        this.getInOrderList(list, root);
+        return list;
+    }
+
+    private void getInOrderList(SLList<T> list, BNode<T> node) {
         if (node != null) {
-            traverseInOrder(node.getLeft());
-            System.out.println(node.getData());
-            traverseInOrder(node.getRight());
+            getInOrderList(list, node.getLeft());
+            list.addTail(node.getData());
+            getInOrderList(list, node.getRight());
         }
     }
     
