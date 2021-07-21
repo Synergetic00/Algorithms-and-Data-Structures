@@ -118,50 +118,38 @@ public class BinSearchTree<T extends Comparable<? super T>> {
 
     public void remove(T data) {
         if (!contains(data)) return;
-        root = traverseAndRemove(root, data);
+        traverseAndRemove(this.root, data);
     }
 
     private BNode<T> traverseAndRemove(BNode<T> origin, T data) {
-        if (origin == null) {
-            return null;
-        }
-
-        if (origin.getData().compareTo(data) < 0) {
+        if(origin == null) return origin;
+ 
+        if(data.compareTo(origin.getData()) < 0) {
+            origin.setLeft(traverseAndRemove(origin.getLeft(), data));
+        } else if(data.compareTo(origin.getData()) > 0) {
             origin.setRight(traverseAndRemove(origin.getRight(), data));
-        } else if (origin.getData().compareTo(data) > 0) {
-            origin.setLeft(traverseAndRemove(origin.getRight(), data));
         } else {
-            switch (origin.children()) {
-                case 0:
-                    origin = null;
-                    break;
-                case 1:
-                    if (origin.hasLeftNode()) {
-                        origin = origin.getLeft();
-                    } else {
-                        origin = origin.getRight();
-                    }
-                    break;
-                case 2:
-                    BNode<T> temp = origin;
-                    BNode<T> minNodeForRight = minNode(temp.getRight());
-                    origin.setData(minNodeForRight.getData());
-                    origin.setRight(traverseAndRemove(origin.getRight(), minNodeForRight.getData()));
-                    break;
-                default:
-                    break;
+            if(origin.children() == 0) {
+                return null;
+            } else if(origin.getLeft() == null) {
+                return origin.getRight();
+            } else if(origin.getRight() == null) {
+                return origin.getLeft();
+            } else {
+                T minValue = minValue(origin.getRight());
+                origin.setData(minValue);
+                origin.setRight(traverseAndRemove(origin.getRight(), minValue));
             }
         }
-
+ 
         return origin;
     }
 
-    private BNode<T> minNode(BNode<T> origin) {
-        if (origin.getLeft() == null) {
-            return origin;
-        } else {
-            return minNode(origin.getLeft());
+    private T minValue(BNode<T> origin) {
+        if(origin.getLeft() != null) {
+            return minValue(origin.getLeft());
         }
+        return origin.getData();
     }
     
 }
