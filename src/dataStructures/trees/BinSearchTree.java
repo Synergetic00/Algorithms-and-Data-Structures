@@ -115,5 +115,53 @@ public class BinSearchTree<T extends Comparable<? super T>> {
             list.addTail(node.getData());
         }
     }
+
+    public void remove(T data) {
+        if (!contains(data)) return;
+        root = traverseAndRemove(root, data);
+    }
+
+    private BNode<T> traverseAndRemove(BNode<T> origin, T data) {
+        if (origin == null) {
+            return null;
+        }
+
+        if (origin.getData().compareTo(data) < 0) {
+            origin.setRight(traverseAndRemove(origin.getRight(), data));
+        } else if (origin.getData().compareTo(data) > 0) {
+            origin.setLeft(traverseAndRemove(origin.getRight(), data));
+        } else {
+            switch (origin.children()) {
+                case 0:
+                    origin = null;
+                    break;
+                case 1:
+                    if (origin.hasLeftNode()) {
+                        origin = origin.getLeft();
+                    } else {
+                        origin = origin.getRight();
+                    }
+                    break;
+                case 2:
+                    BNode<T> temp = origin;
+                    BNode<T> minNodeForRight = minNode(temp.getRight());
+                    origin.setData(minNodeForRight.getData());
+                    origin.setRight(traverseAndRemove(origin.getRight(), minNodeForRight.getData()));
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        return origin;
+    }
+
+    private BNode<T> minNode(BNode<T> origin) {
+        if (origin.getLeft() == null) {
+            return origin;
+        } else {
+            return minNode(origin.getLeft());
+        }
+    }
     
 }
