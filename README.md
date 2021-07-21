@@ -4,19 +4,20 @@
 
 - [x] Selection Sort
 - [x] Bubble Sort
+- [ ] Recursive Bubble Sort
 - [x] Insertion Sort
+- [ ] Recursive Insertion Sort
+- [ ] Binary Insertion Sort
 - [x] Merge Sort
+- [ ] Iterative Merge Sort
 - [x] Quick Sort
+- [ ] Iterative Quick Sort
+- [ ] Dual-Pivot Quicksort
 - [x] Heap Sort
 - [x] Counting Sort
 - [x] Radix Sort
-- [ ] Bucket Sort
-- [ ] Dual-Pivot Quicksort
-- [ ] Recursive Bubble Sort
-- [ ] Recursive Insertion Sort
-- [ ] Iterative Merge Sort
-- [ ] Iterative Quick Sort
-- [ ] ShellSort
+- [x] Bucket Sort
+- [x] ShellSort
 - [ ] Timsort
 - [ ] Comb Sort
 - [ ] Cubesort
@@ -26,7 +27,6 @@
 - [ ] Strand Sort
 - [ ] Bitonic Sort
 - [ ] Pancake sorting
-- [ ] Binary Insertion Sort
 - [ ] BogoSort
 - [ ] Gnome Sort
 - [ ] Sleep Sort

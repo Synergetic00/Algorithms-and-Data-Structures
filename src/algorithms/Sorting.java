@@ -1,6 +1,27 @@
 package algorithms;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+
 public class Sorting {
+
+    public static int min(int[] arr) {
+        int min = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] < min) min = arr[i];
+        }
+        return min;
+    }
+
+    public static int max(int[] arr) {
+        int max = arr[0];
+        for (int i = 0; i < arr.length; i++) {
+            if (arr[i] > max) max = arr[i];
+        }
+        return max;
+    }
     
     public static void swap(int[] arr, int a, int b) {
         int temp = arr[a];
@@ -197,7 +218,97 @@ public class Sorting {
     // Bucket Sort
 
     public static void bucketSort(int[] arr) {
-        
+        int max = max(arr);
+        int min = min(arr);
+        int numOfBuckets = max - min + 1;
+        List<List<Integer>> buckets = new ArrayList<>(numOfBuckets);
+
+        for (int i = 0; i < numOfBuckets; i++) {
+            buckets.add(new ArrayList<>());
+        }
+
+        for (int i = 0; i < arr.length; i++) {
+            int hash = hash(arr[i], min, numOfBuckets);
+            buckets.get(hash).add(arr[i]);
+        }
+
+        for (List<Integer> bucket : buckets) {
+            Collections.sort(bucket);
+        }
+
+        int index = 0;
+        for (List<Integer> bucket : buckets) {
+            for (int value : bucket) {
+                arr[index++] = value;
+            }
+        }
+    }
+
+    private static int hash(int elem, int min, int numberOfBucket) {
+        return (elem - min) / numberOfBucket;
+    }
+
+    // Shell Sort
+
+    public static void shellSort(int[] arr) {
+        for (int i = 1; A108870(i) > arr.length; i++) {
+            int gap = A108870(i);
+            for (int j = gap; j < arr.length; j++) {
+                int temp = arr[j];
+                int k;
+                for (k = j; k >= gap && arr[k - gap] > temp; k -= gap) {
+                    arr[j] = temp;
+                }
+            }
+        }
+    }
+
+    private static int A108870(int k) {
+        double nineOnFourPow = Math.pow((9d / 4d), k-1);
+        double inBrackets = 9d * nineOnFourPow - 4d;
+        return (int) Math.ceil((1d / 5d) * inBrackets);
+    }
+
+    // TimSort
+
+    static final int MIN_MERGE = 32;
+
+    public static void timSort(int[] arr) {
+        int minRun = minRunLength(MIN_MERGE);
+        for (int i = 0; i < arr.length; i += minRun) {
+            int end = Math.min((i + MIN_MERGE - 1), (arr.length - 1));
+            insertionSort(arr, i, end);
+        }
+
+        for (int size = minRun; size < arr.length; size = 2 * size) {
+            for (int left = 0; left < arr.length; left += 2 * size) {
+                int mid = left + size - 1;
+                int right = Math.min((left + 2 * size - 1), (arr.length - 1));
+                  if(mid < right) merge(arr, left, right);
+            }
+        }
+    }
+
+    public static void insertionSort(int[] arr, int left, int right) {
+        for (int i = left + 1; i <= right; i++) {
+            int temp = arr[i];
+            int j = i - 1;
+            while (j >= left && arr[j] > temp) {
+                arr[j + 1] = arr[j];
+                j--;
+            }
+            arr[j + 1] = temp;
+        }
+    }
+
+    private static int minRunLength(int n)
+    {
+        int r = 0;
+        while (n >= MIN_MERGE) {
+            r |= (n & 1);
+            n >>= 1;
+        }
+        return n + r;
     }
 
 }
