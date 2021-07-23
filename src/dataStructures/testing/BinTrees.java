@@ -1,39 +1,48 @@
 package dataStructures.testing;
 
 import dataStructures.trees.BinSearchTree;
+import dataStructures.trees.BinaryTree;
 
 public class BinTrees {
 
     public static void main(String[] args) {
-        /*BinaryTree<Integer> bt = new BinaryTree<>();
+        testBinaryTree();
+        //testBinSearchTree();
+    }
 
-        bt.add(6);
-        bt.add(4);
-        bt.add(8);
-        bt.add(3);
-        bt.add(5);
-        bt.add(7);
-        bt.add(9);
+    public static void testBinaryTree() {
+        BinaryTree<Integer> bt = new BinaryTree<>();
 
-        bt.printPreOrder();*/
+        bt.insert(10);
+        bt.insert(11);
+        bt.insert(7);
+        bt.insert(9);
+        bt.insert(15);
+        bt.insert(8);
 
+        bt.printInOrder();
+        bt.insert(12);
+        bt.printInOrder();
+    }
+
+    public static void testBinSearchTree() {
         BinSearchTree<Integer> tree = new BinSearchTree<Integer>();
-
-        tree.insert(50);
-        tree.insert(30);
-        tree.insert(60);
-        tree.insert(20);
-        tree.insert(40);
-        tree.insert(80);
-        tree.insert(70);
-
-        tree.remove(50);
-
+        tree.insert(42);
+        tree.insert(31);
+        tree.insert(135);
+        tree.insert(27);
+        tree.insert(14);
+        tree.insert(10);
+        tree.insert(19);
+        tree.remove(27);
         System.out.println("In-Order");
         tree.printInOrder();
         System.out.println("Pre-Order");
         tree.printPreOrder();
         System.out.println("Post-Order");
         tree.printPostOrder();
+        tree.display();
+        tree.balance();
+        tree.display();
     }
 }

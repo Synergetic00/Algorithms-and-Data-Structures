@@ -2,6 +2,7 @@ package dataStructures.trees;
 
 import java.util.Arrays;
 
+import dataStructures.linkedLists.LLStack;
 import dataStructures.linkedLists.SLList;
 
 public class BinSearchTree<T extends Comparable<? super T>> {
@@ -16,18 +17,20 @@ public class BinSearchTree<T extends Comparable<? super T>> {
 
         if (root == null) {
             root = node;
+            size++;
             return;
         } else {
             if (contains(data)) {
                 return;
             } else {
                 traverseAndInsert(root, node);
+                size++;
             }
         }
     }
 
     public boolean contains(T data) {
-        return findNode(data) != null;
+        return this.findNode(data) != null;
     }
 
     public BNode<T> findNode(T data) {
@@ -66,6 +69,10 @@ public class BinSearchTree<T extends Comparable<? super T>> {
 
 	public boolean isEmpty() {
 		return root == null;
+	}
+
+	public int size() {
+		return size;
 	}
 
     public void printPreOrder() {
@@ -119,6 +126,7 @@ public class BinSearchTree<T extends Comparable<? super T>> {
     public void remove(T data) {
         if (!contains(data)) return;
         traverseAndRemove(this.root, data);
+        size--;
     }
 
     private BNode<T> traverseAndRemove(BNode<T> origin, T data) {
@@ -147,9 +155,90 @@ public class BinSearchTree<T extends Comparable<? super T>> {
 
     private T minValue(BNode<T> origin) {
         if(origin.getLeft() != null) {
-            return minValue(origin.getLeft());
+            return this.minValue(origin.getLeft());
         }
         return origin.getData();
+    }
+
+    private T maxValue(BNode<T> origin) {
+        if(origin.getRight() != null) {
+            return this.maxValue(origin.getRight());
+        }
+        return origin.getData();
+    }
+
+    public int height() {
+        if (this.isEmpty()) {
+            return 0;
+        } else {
+            BNode<T> origin = root;
+            return height(origin);
+        }
+    }
+
+    private int height(BNode<T> origin) {
+        if (origin == null) return 0;
+        return Math.max(height(origin.getLeft()), height(origin.getRight())) + 1;
+    }
+
+    public void display() {
+        int maxLength = String.valueOf(this.maxValue(root)).length();
+        final LLStack<BNode<T>> treeStack = new LLStack<BNode<T>>();
+        treeStack.push(this.root);
+        int index = 0;
+        boolean isRowEmpty = false;
+        while (!isRowEmpty) {
+            int preceedingSpaces = getSpacingTerm((this.height() - index - 1), maxLength);
+            int delimitingSpaces = getSpacingTerm((this.height() - index), maxLength);
+            index++;
+            final LLStack<BNode<T>> localStack = new LLStack<BNode<T>>();
+            isRowEmpty = true;
+            // Preceeding spaces
+            for (int s = 0; s < preceedingSpaces; s++) System.out.print(" ");
+            while (!treeStack.isEmpty()) {
+                final BNode<T> temp = (BNode<T>)treeStack.pop();
+                if (temp != null) {
+                    int length = String.valueOf(temp.getData()).length();
+                    for (int p = 0; p < maxLength - length; p++) System.out.print(" ");
+                    System.out.print(temp.getData());
+                    localStack.push(temp.getLeft());
+                    localStack.push(temp.getRight());
+                    if (temp.children() > 0) isRowEmpty = false;
+                } else {
+                    for (int p = 0; p < maxLength; p++) System.out.print("_");
+                    localStack.push(null);
+                    localStack.push(null);
+                }
+                // Seperating spaces
+                for (int y = 0; y < delimitingSpaces; ++y) System.out.print(" ");
+            }
+            System.out.println();
+            while (!localStack.isEmpty()) treeStack.push(localStack.pop());
+        }
+        System.out.println();
+    }
+
+    private int getSpacingTerm(int index, int length) {
+        int sum = 0;
+        for (int i = 0; i < index; i++) {
+            sum += 3 * Math.pow(2, i);
+        }
+        return sum;
+    }
+
+    public void balance() {
+        Object[] sortedArr = this.getOrderedList(INORDER).toArray();
+        root = balance(sortedArr, 0, sortedArr.length-1);
+    }
+
+    @SuppressWarnings("unchecked")
+    private BNode<T> balance(Object[] arr, int start, int end) {
+        if (start > end) return null;
+        int mid = (start + end) / 2;
+        BNode<T> node = new BNode<T>((T)arr[mid]);
+        node.setLeft(balance(arr, start, mid-1));
+        node.setRight(balance(arr, mid+1, end));
+        return node;
     }
     
 }
