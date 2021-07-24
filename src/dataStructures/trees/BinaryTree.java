@@ -89,19 +89,20 @@ public class BinaryTree<T extends Comparable<T>> {
 
     public SLList<T> getBreadthFirstList() {
         SLList<T> list = new SLList<T>();
-        for (int i = 1; i <= this.height(); i++) {
-            getBreadthFirstList(list, root, i);
-        }
+        getBreadthFirstList(list, root);
         return list;
     }
 
-    private void getBreadthFirstList(SLList<T> list, BNode<T> node, int level) {
+    private void getBreadthFirstList(SLList<T> list, BNode<T> origin) {
         if (root == null) return;
-        if (level == 1) {
+        LLQueue<BNode<T>> queue = new LLQueue<BNode<T>>();
+        queue.clear();
+        queue.enqueue(root);
+        while(!queue.isEmpty()) {
+            BNode<T> node = queue.dequeue();
             list.addTail(node.getData());
-        } else if (level > 1) {
-            getBreadthFirstList(list, root.getLeft(), level-1);
-            getBreadthFirstList(list, root.getRight(), level-1);
+            if(node.getLeft() != null) queue.enqueue(node.getLeft());
+            if(node.getRight() != null) queue.enqueue(node.getRight());
         }
     }
 

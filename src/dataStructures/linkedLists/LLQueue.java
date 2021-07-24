@@ -48,4 +48,9 @@ public class LLQueue<T> {
         if (isEmpty()) back = null;
     }
 
+    public void clear() {
+        front = null;
+        back = null;
+    }
+
 }
