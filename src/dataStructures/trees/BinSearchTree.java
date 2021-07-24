@@ -5,7 +5,7 @@ import java.util.Arrays;
 import dataStructures.linkedLists.LLStack;
 import dataStructures.linkedLists.SLList;
 
-public class BinSearchTree<T extends Comparable<? super T>> {
+public class BinSearchTree<T extends Comparable<T>> {
 
     public static final int PREORDER = -1, INORDER = 0, POSTORDER = 1;
 

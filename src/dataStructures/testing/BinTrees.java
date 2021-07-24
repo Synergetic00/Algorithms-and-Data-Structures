@@ -12,17 +12,16 @@ public class BinTrees {
 
     public static void testBinaryTree() {
         BinaryTree<Integer> bt = new BinaryTree<>();
-
         bt.insert(10);
         bt.insert(11);
         bt.insert(7);
         bt.insert(9);
         bt.insert(15);
         bt.insert(8);
-
-        bt.printInOrder();
         bt.insert(12);
-        bt.printInOrder();
+        bt.remove(11);
+        bt.display();
+        bt.printBreadthFirst();
     }
 
     public static void testBinSearchTree() {
@@ -34,7 +33,7 @@ public class BinTrees {
         tree.insert(14);
         tree.insert(10);
         tree.insert(19);
-        tree.remove(27);
+        //tree.remove(27);
         System.out.println("In-Order");
         tree.printInOrder();
         System.out.println("Pre-Order");

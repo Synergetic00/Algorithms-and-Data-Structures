@@ -3,10 +3,11 @@ package dataStructures.trees;
 import java.util.Arrays;
 
 import dataStructures.linkedLists.LLQueue;
+import dataStructures.linkedLists.LLStack;
 import dataStructures.linkedLists.SLList;
 
 @SuppressWarnings("unused")
-public class BinaryTree<T extends Comparable<? super T>> {
+public class BinaryTree<T extends Comparable<T>> {
 
     public static final int PREORDER = -1, INORDER = 0, POSTORDER = 1;
 
@@ -14,15 +15,7 @@ public class BinaryTree<T extends Comparable<? super T>> {
     int size = 0;
 
     public void insert(T data) {
-        BNode<T> node = new BNode<T>(data);
-
-        if (root == null) {
-            root = node;
-            return;
-        } else {
-            traverseAndInsert(root, node);
-        }
-
+        traverseAndInsert(root, data);
         size++;
     }
 
@@ -38,20 +31,30 @@ public class BinaryTree<T extends Comparable<? super T>> {
         return null;
     }
 
-    private void traverseAndInsert(BNode<T> origin, BNode<T> node) {
-        LLQueue<BNode<T>> queue = new LLQueue<BNode<T>>();
-        queue.enqueue(root);
-        while (!queue.isEmpty()) {
-            origin = queue.dequeue();
-            if (!origin.hasLeftNode()) {
-                origin.setLeft(node);
+    private void traverseAndInsert(BNode<T> temp, T data) {
+        if (temp == null) {
+            root = new BNode<T>(data);;
+            return;
+        }
+        
+        LLQueue<BNode<T>> q = new LLQueue<BNode<T>>();
+        q.enqueue(temp);
+ 
+        while (!q.isEmpty()) {
+            temp = q.dequeue();
+ 
+            if (temp.getLeft() == null) {
+                temp.setLeft(new BNode<T>(data));
+                break;
             } else {
-                queue.enqueue(origin.getLeft());
+                q.enqueue(temp.getLeft());
             }
-            if (!origin.hasRightNode()) {
-                origin.setRight(node);
+ 
+            if (temp.getRight() == null) {
+                temp.setRight(new BNode<T>(data));
+                break;
             } else {
-                queue.enqueue(origin.getLeft());
+                q.enqueue(temp.getRight());
             }
         }
     }
@@ -68,6 +71,10 @@ public class BinaryTree<T extends Comparable<? super T>> {
         return size;
     }
 
+    public void printBreadthFirst() {
+        System.out.println(Arrays.toString(this.getBreadthFirstList().toArray()));
+    }
+
     public void printPreOrder() {
         System.out.println(Arrays.toString(this.getOrderedList(PREORDER).toArray()));
     }
@@ -78,6 +85,24 @@ public class BinaryTree<T extends Comparable<? super T>> {
 
     public void printPostOrder() {
         System.out.println(Arrays.toString(this.getOrderedList(POSTORDER).toArray()));
+    }
+
+    public SLList<T> getBreadthFirstList() {
+        SLList<T> list = new SLList<T>();
+        for (int i = 1; i <= this.height(); i++) {
+            getBreadthFirstList(list, root, i);
+        }
+        return list;
+    }
+
+    private void getBreadthFirstList(SLList<T> list, BNode<T> node, int level) {
+        if (root == null) return;
+        if (level == 1) {
+            list.addTail(node.getData());
+        } else if (level > 1) {
+            getBreadthFirstList(list, root.getLeft(), level-1);
+            getBreadthFirstList(list, root.getRight(), level-1);
+        }
     }
 
     public SLList<T> getOrderedList(int order) {
@@ -117,11 +142,82 @@ public class BinaryTree<T extends Comparable<? super T>> {
     }
 
     public void remove(T data) {
+        traverseAndRemove(root, data);
         size--;
     }
 
-    private BNode<T> traverseAndRemove(BNode<T> origin, T data) {
-        return null;
+    private void traverseAndRemove(BNode<T> origin, T data) {
+        if (origin == null) return;
+
+		if (origin.getLeft() == null && origin.getRight() == null) {
+			if (origin.getData().equals(data)) {
+				origin=null;
+				return;
+			} else {
+				return;
+            }
+		}
+
+        LLQueue<BNode<T>> q = new LLQueue<BNode<T>>();
+		q.enqueue(root);
+		BNode<T> temp = null, keyNode = null;
+
+		while (!q.isEmpty()) {
+			temp = q.peek();
+			q.remove();
+
+			if (temp.getData().equals(data)) {
+                keyNode = temp;
+            }
+
+			if (temp.getLeft() != null) {
+                q.enqueue(temp.getLeft());
+            }
+
+			if (temp.getRight() != null) {
+				q.enqueue(temp.getRight());
+            }
+		}
+
+		if (keyNode != null) {
+			T x = temp.getData();
+			removeLeaf(origin, temp);
+			keyNode.setData(x);
+		}
+    }
+
+    private void removeLeaf(BNode<T> origin, BNode<T> toDelete) {
+        LLQueue<BNode<T>> q = new LLQueue<BNode<T>>();
+		q.enqueue(root);
+
+		BNode<T> temp = null;
+
+		while (!q.isEmpty()) {
+			temp = q.peek();
+			q.remove();
+
+			if (temp == toDelete) {
+				temp = null;
+				return;
+			}
+			if (temp.getRight() != null) {
+				if (temp.getRight() == toDelete) {
+					temp.setRight(null);
+					return;
+				} else {
+					q.enqueue(temp.getRight());
+                }
+			}
+
+			if (temp.getLeft() != null) {
+				if (temp.getLeft() == toDelete) {
+					temp.setLeft(null);
+					return;
+				} else {
+                    q.enqueue(temp.getLeft());
+                }
+			}
+		}
     }
 
     private T minValue(BNode<T> origin) {
@@ -142,15 +238,52 @@ public class BinaryTree<T extends Comparable<? super T>> {
     }
 
     private int height(BNode<T> origin) {
-        return 0;
+        if (origin == null) return 0;
+        return Math.max(height(origin.getLeft()), height(origin.getRight())) + 1;
     }
 
     public void display() {
-        
+        int maxLength = String.valueOf(this.maxValue(root)).length();
+        final LLStack<BNode<T>> treeStack = new LLStack<BNode<T>>();
+        treeStack.push(this.root);
+        int index = 0;
+        boolean isRowEmpty = false;
+        while (!isRowEmpty) {
+            int preceedingSpaces = getSpacingTerm((this.height() - index - 1), maxLength);
+            int delimitingSpaces = getSpacingTerm((this.height() - index), maxLength);
+            index++;
+            final LLStack<BNode<T>> localStack = new LLStack<BNode<T>>();
+            isRowEmpty = true;
+            // Preceeding spaces
+            for (int s = 0; s < preceedingSpaces; s++) System.out.print(" ");
+            while (!treeStack.isEmpty()) {
+                final BNode<T> temp = (BNode<T>)treeStack.pop();
+                if (temp != null) {
+                    int length = String.valueOf(temp.getData()).length();
+                    for (int p = 0; p < maxLength - length; p++) System.out.print(" ");
+                    System.out.print(temp.getData());
+                    localStack.push(temp.getLeft());
+                    localStack.push(temp.getRight());
+                    if (temp.children() > 0) isRowEmpty = false;
+                } else {
+                    for (int p = 0; p < maxLength; p++) System.out.print("_");
+                    localStack.push(null);
+                    localStack.push(null);
+                }
+                // Seperating spaces
+                for (int y = 0; y < delimitingSpaces; ++y) System.out.print(" ");
+            }
+            System.out.println();
+            while (!localStack.isEmpty()) treeStack.push(localStack.pop());
+        }
     }
 
     private int getSpacingTerm(int index, int length) {
-        return 0;
+        int sum = 0;
+        for (int i = 0; i < index; i++) {
+            sum += length * Math.pow(2, i);
+        }
+        return sum;
     }
     
 }

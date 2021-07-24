@@ -41,4 +41,11 @@ public class LLQueue<T> {
         return front.getData();
     }
 
+    public void remove() {
+        if (isEmpty()) throw new EmptyStackException();
+        front = front.getNext();
+        length--;
+        if (isEmpty()) back = null;
+    }
+
 }
