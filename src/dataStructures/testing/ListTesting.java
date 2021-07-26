@@ -43,7 +43,7 @@ public class ListTesting {
 
     public static void testSLList() {
         System.out.println("\nSingly Linked List:");
-        SLList<Object> list = new SLList<Object>();
+        SLList<Integer> list = new SLList<Integer>();
         
         list.append(20);
         list.append(10);
@@ -62,11 +62,11 @@ public class ListTesting {
 
         System.out.println("------");
         
-        SLList<Object> loop = new SLList<Object>();
-        SNode<Object> a = new SNode<Object>(1);
-        SNode<Object> b = new SNode<Object>(2);
-        SNode<Object> c = new SNode<Object>(3);
-        SNode<Object> d = new SNode<Object>(4);
+        SLList<Integer> loop = new SLList<Integer>();
+        SNode<Integer> a = new SNode<Integer>(1);
+        SNode<Integer> b = new SNode<Integer>(2);
+        SNode<Integer> c = new SNode<Integer>(3);
+        SNode<Integer> d = new SNode<Integer>(4);
 
         loop.insertTail(a);
         loop.insertTail(b);

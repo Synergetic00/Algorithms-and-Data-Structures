@@ -6,7 +6,6 @@ import dataStructures.linkedLists.LLQueue;
 import dataStructures.linkedLists.LLStack;
 import dataStructures.linkedLists.SLList;
 
-@SuppressWarnings("unused")
 public class BinaryTree<T extends Comparable<T>> {
 
     public static final int PREORDER = -1, INORDER = 0, POSTORDER = 1;
@@ -15,6 +14,7 @@ public class BinaryTree<T extends Comparable<T>> {
     int size = 0;
 
     public void insert(T data) {
+        if (contains(data)) return;
         traverseAndInsert(root, data);
         size++;
     }
@@ -24,10 +24,16 @@ public class BinaryTree<T extends Comparable<T>> {
     }
 
     public BNode<T> findNode(T data) {
-        return this.findNode(root, data);
-    }
-
-    private BNode<T> findNode(BNode<T> origin, T data) {
+        if (root == null) return null;
+        LLQueue<BNode<T>> queue = new LLQueue<BNode<T>>();
+        queue.clear();
+        queue.enqueue(root);
+        while(!queue.isEmpty()) {
+            BNode<T> node = queue.dequeue();
+            if (node.getData().equals(data)) return node;
+            if(node.getLeft() != null) queue.enqueue(node.getLeft());
+            if(node.getRight() != null) queue.enqueue(node.getRight());
+        }
         return null;
     }
 
@@ -221,12 +227,35 @@ public class BinaryTree<T extends Comparable<T>> {
 		}
     }
 
+    @SuppressWarnings("unused")
     private T minValue(BNode<T> origin) {
-        return null;
+        if (root == null) return null;
+        T minimum = root.getData();
+        LLQueue<BNode<T>> queue = new LLQueue<BNode<T>>();
+        queue.clear();
+        queue.enqueue(root);
+        while(!queue.isEmpty()) {
+            BNode<T> node = queue.dequeue();
+            if (node.getData().compareTo(minimum) < 0) minimum = node.getData();
+            if(node.getLeft() != null) queue.enqueue(node.getLeft());
+            if(node.getRight() != null) queue.enqueue(node.getRight());
+        }
+        return minimum;
     }
 
     private T maxValue(BNode<T> origin) {
-        return null;
+        if (root == null) return null;
+        T maximum = root.getData();
+        LLQueue<BNode<T>> queue = new LLQueue<BNode<T>>();
+        queue.clear();
+        queue.enqueue(root);
+        while(!queue.isEmpty()) {
+            BNode<T> node = queue.dequeue();
+            if (node.getData().compareTo(maximum) > 0) maximum = node.getData();
+            if(node.getLeft() != null) queue.enqueue(node.getLeft());
+            if(node.getRight() != null) queue.enqueue(node.getRight());
+        }
+        return maximum;
     }
 
     public int height() {

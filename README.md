@@ -54,5 +54,5 @@
 
 ## Trees
 
-- [ ] Binary Tree
+- [x] Binary Tree
 - [x] Binary Search Tree
