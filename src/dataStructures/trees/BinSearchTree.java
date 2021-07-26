@@ -1,16 +1,8 @@
 package dataStructures.trees;
 
-import java.util.Arrays;
-
 import dataStructures.linkedLists.LLStack;
-import dataStructures.linkedLists.SLList;
 
-public class BinSearchTree<T extends Comparable<T>> {
-
-    public static final int PREORDER = -1, INORDER = 0, POSTORDER = 1;
-
-    BNode<T> root;
-    int size = 0;
+public class BinSearchTree<T extends Comparable<T>> extends BinaryTree<T> {
 
     public void insert(T data) {
         BNode<T> node = new BNode<T>(data);
@@ -27,10 +19,6 @@ public class BinSearchTree<T extends Comparable<T>> {
                 size++;
             }
         }
-    }
-
-    public boolean contains(T data) {
-        return this.findNode(data) != null;
     }
 
     public BNode<T> findNode(T data) {
@@ -60,66 +48,6 @@ public class BinSearchTree<T extends Comparable<T>> {
             } else {
                 origin.setRight(node);
             }
-        }
-    }
-
-	public void clear() {
-		root = null;
-	}
-
-	public boolean isEmpty() {
-		return root == null;
-	}
-
-	public int size() {
-		return size;
-	}
-
-    public void printPreOrder() {
-        System.out.println(Arrays.toString(this.getOrderedList(PREORDER).toArray()));
-    }
-
-    public void printInOrder() {
-        System.out.println(Arrays.toString(this.getOrderedList(INORDER).toArray()));
-    }
-
-    public void printPostOrder() {
-        System.out.println(Arrays.toString(this.getOrderedList(POSTORDER).toArray()));
-    }
-
-    public SLList<T> getOrderedList(int order) {
-        SLList<T> list = new SLList<T>();
-        if (order < 0) {
-            this.getPreOrderList(list, root);
-        } else if (order > 0) {
-            this.getPostOrderList(list, root);
-        } else {
-            this.getInOrderList(list, root);
-        }
-        return list;
-    }
-
-    private void getPreOrderList(SLList<T> list, BNode<T> node) {
-        if (node != null) {
-            list.addTail(node.getData());
-            getPreOrderList(list, node.getLeft());
-            getPreOrderList(list, node.getRight());
-        }
-    }
-
-    private void getInOrderList(SLList<T> list, BNode<T> node) {
-        if (node != null) {
-            getInOrderList(list, node.getLeft());
-            list.addTail(node.getData());
-            getInOrderList(list, node.getRight());
-        }
-    }
-
-    private void getPostOrderList(SLList<T> list, BNode<T> node) {
-        if (node != null) {
-            getPostOrderList(list, node.getLeft());
-            getPostOrderList(list, node.getRight());
-            list.addTail(node.getData());
         }
     }
 
@@ -167,20 +95,6 @@ public class BinSearchTree<T extends Comparable<T>> {
         return origin.getData();
     }
 
-    public int height() {
-        if (this.isEmpty()) {
-            return 0;
-        } else {
-            BNode<T> origin = root;
-            return height(origin);
-        }
-    }
-
-    private int height(BNode<T> origin) {
-        if (origin == null) return 0;
-        return Math.max(height(origin.getLeft()), height(origin.getRight())) + 1;
-    }
-
     public void display() {
         int maxLength = String.valueOf(this.maxValue(root)).length();
         final LLStack<BNode<T>> treeStack = new LLStack<BNode<T>>();
@@ -221,7 +135,7 @@ public class BinSearchTree<T extends Comparable<T>> {
     private int getSpacingTerm(int index, int length) {
         int sum = 0;
         for (int i = 0; i < index; i++) {
-            sum += 3 * Math.pow(2, i);
+            sum += length * Math.pow(2, i);
         }
         return sum;
     }
