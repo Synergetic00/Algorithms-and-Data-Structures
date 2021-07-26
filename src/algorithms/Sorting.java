@@ -52,6 +52,22 @@ public class Sorting {
         }
     }
 
+    // Recursive Bubble Sort
+
+    public static void bubbleSortRecursive(int[] arr) {
+        bubbleSortRecursive(arr, arr.length);
+    }
+
+    public static void bubbleSortRecursive(int[] arr, int length) {
+        if (length == 1) return;
+        for (int i = 0; i < length-1; i++) {
+            if (arr[i] > arr[i+1]) {
+                swap(arr, i, i+1);
+            }
+        }
+        bubbleSortRecursive(arr, length-1);
+    }
+
     // Insertion Sort
 
     public static void insertionSort(int[] arr) {
@@ -250,7 +266,7 @@ public class Sorting {
     // Shell Sort
 
     public static void shellSort(int[] arr) {
-        for (int i = 1; A108870(i) > arr.length; i++) {
+        for (int i = seqMaxValue(arr.length); i >= 1; i--) {
             int gap = A108870(i);
             for (int j = gap; j < arr.length; j++) {
                 int temp = arr[j];
@@ -260,6 +276,12 @@ public class Sorting {
                 }
             }
         }
+    }
+
+    private static int seqMaxValue(int length) {
+        int output = 1;
+        for (output = 1; A108870(output) <= length; output++);
+        return output - 1;
     }
 
     private static int A108870(int k) {

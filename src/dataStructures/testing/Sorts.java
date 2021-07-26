@@ -5,13 +5,14 @@ import java.util.Random;
 
 public class Sorts {
 
-    public static final int ARRAY_LENGTH = 100;
-    public static final int RANDOM_MAX = 100;
+    public static final int ARRAY_LENGTH = 10000;
+    public static final int RANDOM_MAX = 1000;
     public static int[] randomArr = new int[ARRAY_LENGTH];
     public static Random random = new Random();
 
     public static void main(String[] args) {
-        testSortingAlgorithm("Shell");
+        testSortingAlgorithm("Bubble", false);
+        testSortingAlgorithm("BubbleRcsv", false);
     }
 
     public static void genNewRandArr() {
@@ -47,7 +48,7 @@ public class Sorts {
         return "The two arrays were identical, the algorithm works!";
     }
 
-    public static long testSortingAlgorithm(String algorithm) {
+    public static long testSortingAlgorithm(String algorithm, boolean debug) {
         int[] mySort = getDeepCopy(randomArr);
         long startTime = System.currentTimeMillis();
         
@@ -82,13 +83,19 @@ public class Sorts {
             case "Shell":
                 Sorting.shellSort(mySort);
                 break;
+            case "BubbleRcsv":
+                Sorting.bubbleSortRecursive(mySort);
+                break;
             default:
                 break;
         }
 
-        System.out.println(identical(randomArr, mySort));
+        if (debug) {
+            System.out.println(identical(randomArr, mySort));
+        }
         long endTime = System.currentTimeMillis();
         long diff = (endTime - startTime);
+        System.out.println(String.format("%s sorting algoritm took approximately %d ms", algorithm, diff));
         return diff;
     }
     

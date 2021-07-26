@@ -4,7 +4,7 @@
 
 - [x] Selection Sort
 - [x] Bubble Sort
-- [ ] Recursive Bubble Sort
+- [x] Recursive Bubble Sort
 - [x] Insertion Sort
 - [ ] Recursive Insertion Sort
 - [ ] Binary Insertion Sort
@@ -26,7 +26,7 @@
 - [ ] Cocktail Sort
 - [ ] Strand Sort
 - [ ] Bitonic Sort
-- [ ] Pancake sorting
+- [ ] Pancake Sort
 - [ ] BogoSort
 - [ ] Gnome Sort
 - [ ] Sleep Sort
