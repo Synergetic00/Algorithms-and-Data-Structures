@@ -1,6 +1,6 @@
 # Algorithms
 
-## Sorting
+## [Sorting](Sorting.md)
 
 - [x] Selection Sort
 - [x] Bubble Sort
