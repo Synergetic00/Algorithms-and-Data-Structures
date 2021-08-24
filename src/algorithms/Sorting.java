@@ -54,18 +54,18 @@ public class Sorting {
 
     // Recursive Bubble Sort
 
-    public static void bubbleSortRecursive(int[] arr) {
-        bubbleSortRecursive(arr, arr.length);
+    public static void bubbleRecursiveSort(int[] arr) {
+        bubbleRecursiveSort(arr, arr.length);
     }
 
-    public static void bubbleSortRecursive(int[] arr, int length) {
-        if (length == 1) return;
+    public static void bubbleRecursiveSort(int[] arr, int length) {
+        if (length < 2) return;
         for (int i = 0; i < length-1; i++) {
             if (arr[i] > arr[i+1]) {
                 swap(arr, i, i+1);
             }
         }
-        bubbleSortRecursive(arr, length-1);
+        bubbleRecursiveSort(arr, length-1);
     }
 
     // Insertion Sort
@@ -80,6 +80,17 @@ public class Sorting {
             }
             arr[j+1] = key;
         }
+    }
+
+    // Recursive Insertion Sort
+
+    public static void insertionRecursiveSort(int[] arr) {
+        insertionRecursiveSort(arr, arr.length);
+    }
+
+    public static void insertionRecursiveSort(int[] arr, int length) {
+        if (length < 2) return;
+        insertionRecursiveSort(arr, length-1);
     }
 
     // Merge Sort
