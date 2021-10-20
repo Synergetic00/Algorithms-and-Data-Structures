@@ -77,4 +77,12 @@ public class Number {
         return (int) (value.charAt(pos) - '0');
     }
 
+    public int size() {
+        return value.length();
+    }
+
+    public String toString() {
+        return value;
+    }
+
 }

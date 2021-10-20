@@ -84,7 +84,7 @@ public class Sorts {
                 Sorting.shellSort(mySort);
                 break;
             case "BubbleRcsv":
-                Sorting.bubbleSortRecursive(mySort);
+                Sorting.bubbleRecursiveSort(mySort);
                 break;
             default:
                 break;
