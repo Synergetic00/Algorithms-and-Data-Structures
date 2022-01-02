@@ -1,4 +1,4 @@
-package dataStructures.testing;
+package algorithms.testing;
 
 public class ShellAlgorithms {
     public static void main(String[] args) {

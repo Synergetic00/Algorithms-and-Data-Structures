@@ -1,4 +1,4 @@
-package dataStructures.testing;
+package algorithms.testing;
 
 import algorithms.Sorting;
 import java.util.Random;
